@@ -2,7 +2,7 @@
 twisted structure generator
 
 # Two different ways to generate structures
-modules:
+modules: \
 lattice.py, utils.py
 example:
 test1.py, test2.py
