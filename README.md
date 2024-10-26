@@ -5,7 +5,7 @@ twisted structure generator
 modules: \
 lattice.py, utils.py \
 example: \
-test1.py, test2.py \
+test1.py, test2.py
 
 modules: \
 lattice2.py, utils2.py \
