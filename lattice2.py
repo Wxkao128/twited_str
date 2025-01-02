@@ -10,7 +10,7 @@ from scipy.spatial import distance
 
 class Lattice:
     def __init__(self, file_name):
-        #self.file = kwargs.get('file', None)  # 讀取文件名稱
+        #self.file = kwargs.get('file', None)  
         self.file = file_name
         self.a1 = None   # a-axis in real space 
         self.a2 = None   # b-axis in real space
@@ -25,17 +25,17 @@ class Lattice:
         
         with open(self.file, 'r') as file:
             for i, line in enumerate(file):
-                stripped_line = line.strip()  # 去掉行末的換行符和空白
+                stripped_line = line.strip()  
                 
-                # 存儲第3到第5行的內容
-                if 2 <= i <= 4:  # 注意：行索引從0開始，因此3行是索引2
+
+                if 2 <= i <= 4: 
                     array1.append([float(x) for x in stripped_line.split()])
                 
-                # 存儲第9行開始的內容
-                if i >= 8:  # 9行是索引8
+
+                if i >= 8:  
                     array2.append([float(x) for x in stripped_line.split()])
                 
-        # 將列表轉換為 numpy array
+        # numpy array
         array1 = np.array(array1)
         array2 = np.array(array2)
         return array1, array2
@@ -50,10 +50,10 @@ class Lattice:
 class LayerSubAtom():
     def __init__(self, layerp_sub_q, **kwargs):
         
-        # 從父類獲取 nx 和 ny
-        self.nx = kwargs.get('nx', 20)  # 若未提供，則預設為 20
-        self.ny = kwargs.get('ny', 20)  # 若未提供，則預設為 20
-        self.t1 = kwargs.get('t1', 0)   # 讀取 t1 (twisted angle)
+        #  nx ny
+        self.nx = kwargs.get('nx', 20)  # default: 20
+        self.ny = kwargs.get('ny', 20)  # default: 20
+        self.t1 = kwargs.get('t1', 0)   # t1 (twisted angle)
         self.a1 = kwargs.get('a1', 0)
         self.a2 = kwargs.get('a2', 0)
         
@@ -98,7 +98,7 @@ class TwistLayer:
     
     def concatenate_sublattices(self):
         """
-        將所有的子晶格座標沿著行方向進行合併，形成一個大的晶格數據
+        supercell
         """
         self.rot_layer = np.concatenate(self.sublattices)
         return self.rot_layer
@@ -109,7 +109,7 @@ class TwistLayer:
         #coincident_12 = np.intersect1d(rot_layer1.view(dtype), rot_layer2.view(dtype)) #combine layer1 and layer2 first
         # modified version: C coincident with C
         
-        # 只取前兩列 (x 和 y)
+        # read (x 和 y)
         rot_layerp_sub_q_xy = rot_layerp_sub_q[:, 0:2]
         rot_layerr_sub_s_xy = rot_layerr_sub_s[:, 0:2]
         self.coincident_12 = np.array([row for row in rot_layerp_sub_q_xy if any(np.all(np.isclose(row, rot_layerr_sub_s_xy), axis=1))])
