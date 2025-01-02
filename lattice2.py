@@ -20,8 +20,8 @@ class Lattice:
             self.read_file()
         
     def read_file(self):
-        array1 = []  # 用於存儲第3到第5行的內容
-        array2 = []  # 用於存儲第9行開始的內容
+        array1 = []  # 3~5
+        array2 = []  # 9~
         
         with open(self.file, 'r') as file:
             for i, line in enumerate(file):
